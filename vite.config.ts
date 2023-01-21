@@ -5,5 +5,12 @@ import dts from './lib'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), demo(), dts({ input: ['virtual:vite-plugin-demo'], output: '' })],
+  plugins: [
+    vue(),
+    demo(),
+    dts({
+      targets: ['virtual:vite-plugin-demo'],
+      outDir: './types'
+    })
+  ],
 })

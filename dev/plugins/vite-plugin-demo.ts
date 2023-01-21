@@ -1,6 +1,6 @@
 import type { Plugin } from 'vite'
 
-const DATA = {
+const data = {
   firstName: 'John',
   lastName: 'Doe',
   age: 20
@@ -18,9 +18,10 @@ function VitePluginDemo(): Plugin {
         return resolvedVirtualModuleId
       }
     },
+
     load(id) {
       if (id === resolvedVirtualModuleId) {
-        return `export const data = ${JSON.stringify(DATA)}`
+        return `export const data = ${JSON.stringify(data)}`
       }
     }
   }

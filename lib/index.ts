@@ -1,31 +1,31 @@
 import type { Plugin } from 'vite'
+import { generateDts } from './declaration'
 
 export interface PluginOptions {
-  input: string[]
-  output: string
+  targets: string[]
+  outDir: string
 }
 
 function VitePluginDtsGenerator(options: PluginOptions): Plugin {
-  const { input } = options
+  const { targets, outDir } = options
 
   return {
     name: 'vite-plugin-dts-generator',
-    buildStart() {
-      console.log('RUN')
-    },
-    resolveId(id) {
-      if (input.map(id => `\0${id}`).includes(id)) {
-        console.log(id)
-        return id
-      }
-    },
-    load(id) {
-      console.log(id)
-      if (input.map(id => `${id}`).includes(id)) {
-        console.log('GET!', id)
+    transform: {
+      order: 'post',
+      handler (code, id) {
+        const resolvedIds = targets.map(i => resolveId(i))
+
+        if (resolvedIds.includes(id)) {
+          generateDts(id, code, outDir)
+        }
       }
     }
   }
+}
+
+function resolveId(id: string) {
+  return id.startsWith('\0') ? id :`\0${id}`
 }
 
 export default VitePluginDtsGenerator
