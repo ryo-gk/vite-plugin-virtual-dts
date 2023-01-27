@@ -1,8 +1,6 @@
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs'
-import ts, { CompilerOptions } from 'typescript'
-import prettier from 'prettier'
-
-const { createCompilerHost, createProgram } = ts
+import { createCompilerHost, createProgram, CompilerOptions } from 'typescript'
+import { format as prettier } from 'prettier'
 
 export function generateDts(id: string, raw: string, outDir: string) {
   const dir = './tmp'
@@ -27,16 +25,13 @@ function formatId(id: string) {
   return id.split('virtual:').slice(-1)
 }
 
-// The below function refers to https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API#getting-the-dts-from-a-javascript-file
 function compile(dir: string, fileName: string, outDir: string, options: CompilerOptions): void {
-  // Create a Program with an in-memory emit
   const createdFiles: Record<string, any> = {}
   const path = `${dir}/${fileName}`
 
   const host = createCompilerHost(options)
   host.writeFile = (fileName: string, contents: string) => createdFiles[fileName] = contents
 
-  // Prepare and emit the d.ts files
   const program = createProgram([path], options, host)
   program.emit()
 
@@ -77,7 +72,7 @@ function toDeclareModule(moduleName: string, content: string) {
 }
 
 function format(content: string) {
-  return prettier.format(content, {
+  return prettier(content, {
     semi: false,
     parser: 'typescript'
   })

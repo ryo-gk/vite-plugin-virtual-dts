@@ -6,17 +6,15 @@ export interface PluginOptions {
   outDir: string
 }
 
-function VitePluginDtsGenerator(options: PluginOptions): Plugin {
+function VitePluginVirtualDts(options: PluginOptions): Plugin {
   const { targets, outDir } = options
 
   return {
-    name: 'vite-plugin-dts-generator',
+    name: 'vite-plugin-virtual-dts',
     transform: {
       order: 'post',
       handler (code, id) {
-        const resolvedIds = targets.map(i => resolveId(i))
-
-        if (resolvedIds.includes(id)) {
+        if (targets.some(target => id.includes(target))) {
           generateDts(id, code, outDir)
         }
       }
@@ -24,8 +22,4 @@ function VitePluginDtsGenerator(options: PluginOptions): Plugin {
   }
 }
 
-function resolveId(id: string) {
-  return id.startsWith('\0') ? id :`\0${id}`
-}
-
-export default VitePluginDtsGenerator
+export default VitePluginVirtualDts

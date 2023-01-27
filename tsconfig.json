@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "CommonJS",
     "target": "ESNext",
-    "moduleResolution": "Node",
+    //"moduleResolution": "Node",
     "strict": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -13,7 +13,7 @@
   },
   "include": [
     "dev/**/*",
-    "*.d.ts",
+    "types/*.d.ts",
     "lib/**/*.ts",
     "vite.config.ts"
   ],
