@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-virtual-dts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Generate declaration files for virtual module",
   "author": "Ryosuke Kogure <ryo.gk55@gmail.com",
   "license": "MIT",
@@ -18,7 +18,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc lib/index.ts --outDir ./dist",
+    "build": "tsc lib/index.ts --declaration --outDir ./dist",
     "release": "node scripts/release.js"
   },
   "dependencies": {
