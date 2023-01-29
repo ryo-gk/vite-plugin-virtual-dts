@@ -1,5 +1,4 @@
 const execa = require('execa')
-const { start } = require('repl')
 const version = require('../package.json').version
 
 const run = (bin, args, opts = {}) => execa(bin, args, { stdio: 'inherit', ...opts })
