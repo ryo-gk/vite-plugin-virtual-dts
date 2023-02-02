@@ -11,12 +11,9 @@ function VitePluginVirtualDts(options: PluginOptions): Plugin {
 
   return {
     name: 'vite-plugin-virtual-dts',
-    transform: {
-      order: 'post',
-      handler (code, id) {
-        if (targets.some(target => id.includes(target))) {
-          generateDts(id, code, outDir)
-        }
+    transform(code, id) {
+      if (targets.some(target => id.includes(target))) {
+        generateDts(id, code, outDir)
       }
     }
   }

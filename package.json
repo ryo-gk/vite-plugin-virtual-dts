@@ -2,7 +2,7 @@
   "name": "vite-plugin-virtual-dts",
   "version": "0.0.4",
   "description": "Generate declaration files for virtual module",
-  "author": "Ryosuke Kogure <ryo.gk55@gmail.com",
+  "author": "Ryosuke Kogure <ryo.gk55@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,17 +15,25 @@
     "dts"
   ],
   "main": "dist/index.js",
-  "module": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
-    "build": "tsc lib/index.ts --target esnext --declaration --outDir ./dist --moduleResolution node",
+    "build": "tsup lib/index.ts --dts --format cjs,esm",
     "release": "node scripts/release.js"
   },
   "dependencies": {
     "@types/node": "^18.11.18",
     "@types/prettier": "^2.7.2",
     "prettier": "^2.8.3",
+    "tsup": "^6.5.0",
     "vue": "^3.2.45"
   },
   "devDependencies": {
