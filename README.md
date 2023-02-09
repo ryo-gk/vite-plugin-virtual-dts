@@ -2,6 +2,12 @@
 
 ## How to use
 
+Install package.
+
+```bash
+> npm install -D vite-plugin-virtual-dts
+```
+
 Write config like below.
 
 ```ts
