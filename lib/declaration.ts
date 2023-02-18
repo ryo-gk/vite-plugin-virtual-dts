@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs'
 import { createCompilerHost, createProgram, CompilerOptions } from 'typescript'
 import { format as prettier } from 'prettier'
+import { format as formatPath } from 'path'
 
 export function generateDts(id: string, raw: string, outDir: string) {
   const dir = './tmp'
@@ -27,7 +28,7 @@ function formatId(id: string) {
 
 function compile(dir: string, fileName: string, outDir: string, options: CompilerOptions): void {
   const createdFiles: Record<string, any> = {}
-  const path = `${dir}/${fileName}`
+  const path = formatPath({ dir, base: fileName })
 
   const host = createCompilerHost(options)
   host.writeFile = (fileName: string, contents: string) => createdFiles[fileName] = contents
@@ -44,7 +45,7 @@ function compile(dir: string, fileName: string, outDir: string, options: Compile
 }
 
 function createJs(dir: string, fileName: string, raw: string) {
-  const path = `${dir}/${fileName}`
+  const path = formatPath({ dir, base: fileName })
   if (!existsSync(dir)) {
     mkdirSync(dir)
   }
@@ -53,7 +54,7 @@ function createJs(dir: string, fileName: string, raw: string) {
 }
 
 function createDts(dir: string, fileName: string, content: string) {
-  const path = `${dir}/${fileName}`
+  const path = formatPath({ dir, base: fileName })
   if (!existsSync(dir)) {
     mkdirSync(dir)
   }
